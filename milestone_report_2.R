@@ -199,7 +199,7 @@ attach(dfUni)
 dfUniSort<-dfUni[order(-Count),]
 detach(dfUni)
 bigram_tokenizer <- ngram_tokenizer(2)
-biList <- bigram_tokenizer(data_sampleNoShort)
+biList <- bigram_tokenizer(data_sampleNoWS2)
 freqNames <- as.vector(names(table(unlist(biList))))
 freqCount <- as.numeric(table(unlist(biList)))
 dfBi <- data.frame(Word = freqNames,
@@ -208,7 +208,7 @@ attach(dfBi)
 dfBiSort<-dfBi[order(-Count),]
 detach(dfBi)
 trigram_tokenizer <- ngram_tokenizer(3)
-triList <- trigram_tokenizer(data_sampleNoShort)
+triList <- trigram_tokenizer(data_sampleNoWS2)
 freqNames <- as.vector(names(table(unlist(triList))))
 freqCount <- as.numeric(table(unlist(triList)))
 dfTri <- data.frame(Word = freqNames,
@@ -230,10 +230,11 @@ g <- g + geom_bar(stat = "identity", fill = I("grey50"))
 g <- g + geom_text(aes(label = Count ), vjust = -0.20, size = 1)
 g <- g + xlab("")
 g <- g + ylab("Frequency")
-g <- g + theme(plot.title = element_text(size = 6, hjust = 0.5, vjust = 0.5),
+g <- g + theme(plot.title = element_text(size = 3, hjust = 0.5, vjust = 0.5),
                axis.text.x = element_text(hjust = 1.0, angle = 45),
                axis.text.y = element_text(hjust = 0.5, vjust = 0.5))
 g <- g + ggtitle("20 Most Common Unigrams")
+print(g)
 
 ggsave("unigrams.png",width=5,height=5)
 
@@ -242,16 +243,17 @@ ggsave("unigrams.png",width=5,height=5)
 
 top_20_bigrams <- dfBiSort[1:20, ]
 
-g <- ggplot(top_20_bigrams, aes(x = reorder(Word, -Count), y = Count))
-g <- g + geom_bar(stat = "identity", fill = I("grey50"))
-g <- g + geom_text(aes(label = Count ), vjust = -0.20, size = 1)
-g <- g + xlab("")
-g <- g + ylab("Frequency")
-g <- g + theme(plot.title = element_text(size = 6, hjust = 0.5, vjust = 0.5),
+c <- ggplot(top_20_bigrams, aes(x = reorder(Word, -Count), y = Count))
+c <- c + geom_bar(stat = "identity", fill = I("grey50"))
+c <- c + geom_text(aes(label = Count ), vjust = -0.20, size = 1)
+c <- c + xlab("")
+c <- c + ylab("Frequency")
+c <- c + theme(plot.title = element_text(size = 3, hjust = 0.5, vjust = 0.5),
                axis.text.x = element_text(hjust = 1.0, angle = 45),
                axis.text.y = element_text(hjust = 0.5, vjust = 0.5))
-g <- g + ggtitle("20 Most Common Unigrams")
+c <- c + ggtitle("20 Most Common Bigrams")
 
+print(c)
 
 
 ggsave("bigrams.png",width=5,height=5)
@@ -259,17 +261,17 @@ ggsave("bigrams.png",width=5,height=5)
 
 top_20_trigrams <- dfTriSort[1:20, ]
 
-g <- ggplot(top_20_trigrams, aes(x = reorder(Word, -Count), y = Count))
-g <- g + geom_bar(stat = "identity", fill = I("grey50"))
-g <- g + geom_text(aes(label = Count ), vjust = -0.20, size = 1)
-g <- g + xlab("")
-g <- g + ylab("Frequency")
-g <- g + theme(plot.title = element_text(size = 6, hjust = 0.5, vjust = 0.5),
+d <- ggplot(top_20_trigrams, aes(x = reorder(Word, -Count), y = Count))
+d <- d + geom_bar(stat = "identity", fill = I("grey50"))
+d <- d + geom_text(aes(label = Count ), vjust = -0.20, size = 1)
+d <- d + xlab("")
+d <- d + ylab("Frequency")
+d <- d + theme(plot.title = element_text(size = 6, hjust = 0.5, vjust = 0.5),
                axis.text.x = element_text(hjust = 1.0, angle = 45),
                axis.text.y = element_text(hjust = 0.5, vjust = 0.5))
-g <- g + ggtitle("20 Most Common Unigrams")
+d <- d + ggtitle("20 Most Common Trigrams")
 
-
+print(d)
 
 ggsave("trigrams.png",width=5,height=5)
 
