@@ -8,14 +8,11 @@
 #
 
 library(shiny)
-source("C:/Users/mikeb/Documents/R/CourseRA R Projects/Capstone/helpers.R")
+source("C:/Users/mikeb/Documents/R/CourseRA R Projects/Capstone/predictor.R")
 
 shinyServer(
     function(input, output) {
-        output$text1 <- renderText({
-            paste(filter_text(get_word(input$input_str)))
-        })
-        output$text2 <- renderText({
+        output$text <- renderText({
             paste(filter_text(get_pred(input$input_str)))
         })
     }
