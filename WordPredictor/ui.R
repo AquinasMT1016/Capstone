@@ -34,17 +34,17 @@ shinyUI(fluidPage(
                )             
         )    
     ),
-    
-    fluidRow(
-        column(12,
-               br(),
-               br(),
-               br(),
-               br(),
-               h4("You entered (with suggested completion of your current word):", style = "color:red;"), 
-               verbatimTextOutput("text1")             
-        )
-    ),
+#    
+#    fluidRow(
+#        column(12,
+#               br(),
+#               br(),
+#               br(),
+#               br(),
+#               h4("You entered (with suggested completion of your current word):", style = "color:red;"), 
+#               verbatimTextOutput("text1")             
+#        )
+#    ),
     
     fluidRow(
         column(12,
