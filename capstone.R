@@ -1,3 +1,4 @@
+
 library(doParallel)
 registerDoParallel(makeCluster(4))
 library(stringr)
@@ -84,8 +85,8 @@ nl <- nl[nl != ""]
 
 lines <- c(bl, tl, nl)
 
-set.seed(42)
-inFrame <- createDataPartition(y = 1:length(lines), p = 0.15, list = F)
+set.seed(1650)
+inFrame <- createDataPartition(y = 1:length(lines), p = 0.40, list = F)
 train <- lines[inFrame]
 
 base <- str_replace_all(train, "www [a-z]+ [a-z]+", "")
@@ -113,6 +114,7 @@ setnames(unigram_dt, "text", "n0")
 tot <- sum(unigram_dt$count)
 unigram_dt <- mutate(unigram_dt, freq = round(count/tot, 7))
 unigram_dt$count <- NULL
+unigram_dt <- as.data.table(unigram_dt)
 setkeyv(unigram_dt, c("n0", "freq"))
 saveRDS(unigram_dt, "./unigram_dt.rds")
 
@@ -124,6 +126,7 @@ bigram_dt[, c("n1", "n0")  := do.call(Map, c(f = c, strsplit(text, " ")))]
 bigram_dt <- mutate(bigram_dt, freq = round(count/base1[n1][[1]], 7))
 bigram_dt$text <- NULL
 bigram_dt$count <- NULL
+bigram_dt <- as.data.table(bigram_dt)
 setkey(bigram_dt, n1)
 bigram_dt <- bigram_dt[,lapply(.SD, function(x) head(x, 5)), by = key(bigram_dt)]
 setkeyv(bigram_dt, c("n1", "freq", "n0"))
@@ -136,6 +139,7 @@ trigram_dt[, c("n2", "n1", "n0")  := do.call(Map, c(f = c, strsplit(text, " ")))
 trigram_dt <- mutate(trigram_dt, freq = round(count/base2[paste(n2, n1)][[1]], 7))
 trigram_dt$text <- NULL
 trigram_dt$count <- NULL
+trigram_dt <- as.data.table(trigram_dt)
 setkeyv(trigram_dt, c("n2", "n1"))
 trigram_dt <- trigram_dt[,lapply(.SD, function(x) head(x, 5)),by = key(trigram_dt)]
 setkeyv(trigram_dt, c("n2", "n1", "freq", "n0"))
@@ -145,3 +149,4 @@ badwords <- read.csv(file = "C:/Users/mikeb/Documents/R/CourseRA R Projects/Caps
 badwords <- tolower(badwords)
 badwords <- str_replace_all(badwords, "\\(", "\\\\(")
 saveRDS(badwords, "./badwords.rds")
+
