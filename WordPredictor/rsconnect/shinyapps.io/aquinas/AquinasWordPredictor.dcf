@@ -1,0 +1,12 @@
+name: AquinasWordPredictor
+title: AquinasWordPredictor
+username:
+account: aquinas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2403952
+bundleId: 3225129
+url: https://aquinas.shinyapps.io/AquinasWordPredictor/
+when: 1591215721.23803
+asMultiple: FALSE
+asStatic: FALSE
